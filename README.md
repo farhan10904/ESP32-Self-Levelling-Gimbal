@@ -650,6 +650,10 @@ Built as an independent engineering project to practise embedded systems, contro
 
 ## Acknowledgements
 
+The original mechanical gimbal bracket and stabilising platform geometry were based on the DIY Arduino Gimbal project by HowToMechatronics: [DIY Arduino Gimbal | Self-Stabilizing Platform](https://howtomechatronics.com/projects/diy-arduino-gimbal-self-stabilizing-platform/)
+
+I adapted the mechanical design for my own ESP32-based version, including changes to the electronics enclosure, PCB integration, wiring layout, power system, Wi-Fi dashboard, and control implementation.
+
 AI tools were used for planning support, debugging help, code review, and documentation improvements.
 
 The hardware choices, circuit changes, PID testing, PCB design decisions, CAD changes, mechanical layout decisions, and final project direction were reviewed, tested, and understood by the author.
