@@ -4,6 +4,8 @@ ESP32-based two-axis self-levelling gimbal platform using an MPU6050 IMU, MG996R
 
 The project was built to understand embedded control systems, IMU sensor fusion, PID tuning, servo actuation, WiFi dashboards, PCB carrier-board design, and mechanical prototyping using Fusion 360 and 3D printed parts.
 
+> **Manufacturing support:** PCB fabrication and 3D printed parts for this project were supported by **PCBWay** through their student/non-profit project sponsorship programme.
+
 ---
 
 ## Project Summary
@@ -649,6 +651,12 @@ Built as an independent engineering project to practise embedded systems, contro
 ---
 
 ## Acknowledgements
+
+PCB fabrication and 3D printed part manufacturing for this project were supported by PCBWay through their student/non-profit project sponsorship programme.
+
+The sponsored manufacturing support helped move the project from completed KiCad PCB files and Fusion 360 CAD models into a physical prototype suitable for final assembly, testing, and documentation.
+
+PCBWay: https://www.pcbway.com/
 
 The original mechanical gimbal bracket and stabilising platform geometry were based on the DIY Arduino Gimbal project by HowToMechatronics: [DIY Arduino Gimbal | Self-Stabilizing Platform](https://howtomechatronics.com/projects/diy-arduino-gimbal-self-stabilizing-platform/)
 
