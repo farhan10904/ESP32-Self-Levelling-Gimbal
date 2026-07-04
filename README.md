@@ -211,7 +211,7 @@ The project was first developed in Wokwi before moving to physical hardware.
 
 <p align="center">
   <img src="docs/images/wokwi-circuit.png" alt="Wokwi circuit simulation" width="48%">
-  <img src="docs/images/Wokwi With Values.png" alt="Wokwi simulation with live values" width="48%">
+  <img src="docs/images/oled-display.png" alt="Wokwi simulation with live values" width="48%">
 </p>
 
 ### Simulated Dashboard
@@ -247,8 +247,7 @@ The custom carrier PCB was designed in KiCad after breadboard testing.
 ### PCB Routing
 
 <p align="center">
-  <img src="docs/images/KiCad PCB Editor Close Up.png" alt="KiCad PCB routing close-up" width="48%">
-  <img src="docs/images/KiCad PCB Editor.png" alt="Full KiCad PCB editor layout" width="48%">
+  <img src="docs/images/kicad-pcb-editor-close-up.png" alt="KiCad PCB routing close-up" width="70%">
 </p>
 
 ### 3D PCB Preview
