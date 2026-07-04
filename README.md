@@ -192,7 +192,7 @@ GND
 
 The system was validated on a breadboard before designing the carrier PCB.
 
-<img src="docs/images/BreadBoard.png" alt="Breadboard prototype of ESP32 self-levelling gimbal electronics" width="700">
+<img src="docs/images/BreadBoard.png" alt="Breadboard prototype of ESP32 self-levelling gimbal electronics" width="500">
 
 The breadboard stage was used to verify:
 
@@ -210,13 +210,13 @@ The breadboard stage was used to verify:
 The project was first developed in Wokwi before moving to physical hardware.
 
 <p align="center">
-  <img src="docs/images/wokwi-circuit.png" alt="Wokwi circuit simulation" width="48%">
-  <img src="docs/images/oled-display.png" alt="Wokwi simulation with live values" width="48%">
+  <img src="docs/images/wokwi-circuit.png" alt="Wokwi circuit simulation" width="40%">
+  <img src="docs/images/oled-display.png" alt="Wokwi simulation with live values" width="40%">
 </p>
 
 ### Simulated Dashboard
 
-<img src="docs/images/dashboard.png" alt="Simulated ESP32 gimbal dashboard" width="800">
+<img src="docs/images/dashboard.png" alt="Simulated ESP32 gimbal dashboard" width="700">
 
 The simulation was used to validate:
 
@@ -240,19 +240,19 @@ The custom carrier PCB was designed in KiCad after breadboard testing.
 ### Final Schematic
 
 <p align="center">
-  <img src="docs/images/kicad-schematic-close-up.png" alt="KiCad PCB schematic close-up" width="48%">
-  <img src="docs/images/kicad-schematic-full.png" alt="Full KiCad PCB schematic" width="48%">
+  <img src="docs/images/kicad-schematic-close-up.png" alt="KiCad PCB schematic close-up" width="45%">
+  <img src="docs/images/kicad-schematic-full.png" alt="Full KiCad PCB schematic" width="45%">
 </p>
 
 ### PCB Routing
 
 <p align="center">
-  <img src="docs/images/kicad-pcb-editor-close-up.png" alt="KiCad PCB routing close-up" width="70%">
+  <img src="docs/images/kicad-pcb-editor-close-up.png" alt="KiCad PCB routing close-up" width="65%">
 </p>
 
 ### 3D PCB Preview
 
-<img src="docs/images/kicad-pcb-preview.png" alt="KiCad 3D preview of ESP32 gimbal PCB" width="550">
+<img src="docs/images/kicad-pcb-preview.png" alt="KiCad 3D preview of ESP32 gimbal PCB" width="520">
 
 The PCB includes:
 
@@ -274,9 +274,9 @@ The PCB includes:
 ### Bare PCB
 
 <p align="center">
-  <img src="docs/images/Front Of PCB.png" alt="Front side of manufactured ESP32 gimbal PCB" width="31%">
-  <img src="docs/images/Back Of PCB .png" alt="Rear side of manufactured ESP32 gimbal PCB" width="31%">
-  <img src="docs/images/Both Sides of PCB.png" alt="Both sides of manufactured ESP32 gimbal PCB" width="31%">
+  <img src="docs/images/Front Of PCB.png" alt="Front side of manufactured ESP32 gimbal PCB" width="30%">
+  <img src="docs/images/Back Of PCB .png" alt="Rear side of manufactured ESP32 gimbal PCB" width="30%">
+  <img src="docs/images/Both Sides of PCB.png" alt="Both sides of manufactured ESP32 gimbal PCB" width="30%">
 </p>
 
 ### Assembled PCB
@@ -298,14 +298,14 @@ The original mechanical geometry was based on the HowToMechatronics self-stabili
 ### Individual CAD Parts
 
 <p align="center">
-  <img src="docs/images/cad_roll_servo_bracket.png" alt="Fusion 360 roll servo bracket" width="31%">
-  <img src="docs/images/cad_base_pitch_servo_bracket.png" alt="Fusion 360 base and pitch servo bracket" width="31%">
-  <img src="docs/images/cad_stabilizing_platform.png" alt="Fusion 360 stabilising platform" width="31%">
+  <img src="docs/images/cad_roll_servo_bracket.png" alt="Fusion 360 roll servo bracket" width="30%">
+  <img src="docs/images/cad_base_pitch_servo_bracket.png" alt="Fusion 360 base and pitch servo bracket" width="30%">
+  <img src="docs/images/cad_stabilizing_platform.png" alt="Fusion 360 stabilising platform" width="30%">
 </p>
 
 <p align="center">
-  <img src="docs/images/cad_electronics_box.png" alt="Fusion 360 electronics box" width="48%">
-  <img src="docs/images/cad_electronics_lid.png" alt="Fusion 360 electronics lid" width="48%">
+  <img src="docs/images/cad_electronics_box.png" alt="Fusion 360 electronics box" width="30%">
+  <img src="docs/images/cad_electronics_lid.png" alt="Fusion 360 electronics lid" width="30%">
 </p>
 
 Main mechanical changes included:
@@ -324,8 +324,8 @@ Main mechanical changes included:
 ## 3D Printed Parts
 
 <p align="center">
-  <img src="docs/images/Brackets and table.png" alt="3D printed gimbal brackets and moving platform" width="48%">
-  <img src="docs/images/Electronics Box.png" alt="3D printed electronics enclosure and lid" width="48%">
+  <img src="docs/images/Brackets and table.png" alt="3D printed gimbal brackets and moving platform" width="50%">
+  <img src="docs/images/Electronics Box.png" alt="3D printed electronics enclosure and lid" width="40%">
 </p>
 
 The parts were manufactured using:
