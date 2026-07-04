@@ -211,7 +211,7 @@ The project was first developed in Wokwi before moving to physical hardware.
 
 <p align="center">
   <img src="docs/images/wokwi-circuit.png" alt="Wokwi circuit simulation" width="48%">
-  <img src="docs/images/WokwiWithValues.png" alt="Wokwi simulation with live values" width="48%">
+  <img src="docs/images/Wokwi With Values.png" alt="Wokwi simulation with live values" width="48%">
 </p>
 
 ### Simulated Dashboard
