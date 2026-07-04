@@ -1,198 +1,173 @@
 # ESP32 Self-Levelling Gimbal
 
-ESP32-based two-axis self-levelling gimbal platform using an MPU6050 IMU, MG996R servos, PID control, a live WiFi dashboard, and a custom KiCad carrier PCB.
+ESP32-based two-axis self-levelling gimbal using an MPU6050 IMU, two MG996R servos, complementary filtering, PID control, a live WiFi dashboard, a custom KiCad carrier PCB, and a modified 3D printed frame.
 
-The project was built to understand embedded control systems, IMU sensor fusion, PID tuning, servo actuation, WiFi dashboards, PCB carrier-board design, and mechanical prototyping using Fusion 360 and 3D printed parts.
+The project was developed to practise embedded control, sensor fusion, PID tuning, servo actuation, browser-based telemetry, PCB design, Fusion 360 CAD, 3D printing, and physical system integration.
 
-> **Manufacturing support:** PCB fabrication and 3D printed parts for this project were supported by **PCBWay** through their student/non-profit project sponsorship programme.
+> **Manufacturing support:** PCB fabrication and 3D printed parts were supported by **PCBWay** through its student/non-profit project sponsorship programme.
+
+---
+
+## Final Result
+
+The completed prototype performs **limited-angle dual-axis roll and pitch correction**.
+
+The MPU6050 measures the moving platform angle. The ESP32 combines accelerometer and gyroscope data using a complementary filter, calculates roll and pitch corrections using PID control, and commands the two servos around calibrated mechanical neutral positions.
+
+Servo travel was deliberately limited to approximately **±5° around each calibrated neutral position**. This kept the prototype stable within the available power and structural limits while still demonstrating genuine two-axis corrective movement.
+
+### Final Demonstration
+
+[![Watch the final dual-axis gimbal demonstration](https://img.youtube.com/vi/LKtvDuY0aLw/maxresdefault.jpg)](https://youtube.com/shorts/LKtvDuY0aLw)
+
+The video shows:
+
+- the completed prototype
+- visible servo correction
+- live roll and pitch values on the dashboard
+- Serial Monitor angle and servo-command output
+- limited-angle dual-axis response
+
+---
+
+## Final Build
+
+<p align="center">
+  <img src="docs/images/front.gif" alt="Front view of completed ESP32 self-levelling gimbal" width="30.5%">
+  <img src="docs/images/Diagonal.gif" alt="Diagonal view of completed ESP32 self-levelling gimbal" width="30.15%">
+  <img src="docs/images/Bird eye.gif" alt="Bird's-eye view of completed ESP32 self-levelling gimbal" width="22%">
+</p>
+
+### Internal Electronics
+
+<p align="center">
+  <img src="docs/images/Inside.gif" alt="Internal electronics showing custom PCB, ESP32, battery holder and power electronics" width="48%">
+  <img src="docs/images/Electronics Box.png" alt="3D printed electronics box and removable lid" width="48%">
+</p>
 
 ---
 
 ## Project Summary
 
-This project controls a two-axis gimbal platform using live roll and pitch angle data from an MPU6050 IMU.
+The project controls a two-axis platform using live roll and pitch data from an MPU6050.
 
-The ESP32 reads the IMU data, applies a complementary filter, calculates correction values using a PID control loop, and drives two MG996R servos to keep the platform level.
+The control pipeline is:
 
-The system also includes a browser dashboard hosted by the ESP32 for:
+```text
+MPU6050
+    ↓
+Accelerometer + gyroscope readings
+    ↓
+Complementary filter
+    ↓
+Roll and pitch error
+    ↓
+PID control
+    ↓
+MG996R servo correction
+```
+
+The ESP32 also hosts a local browser dashboard for:
 
 - live roll and pitch monitoring
-- manual servo control
+- stabilisation mode
+- roll and pitch setpoint control
 - reset-to-flat control
-- switching between stabilisation and dashboard control modes
+- heartbeat-based fallback to stabilisation mode
 
-A custom KiCad carrier PCB was designed after breadboard testing to make the wiring cleaner and allow the ESP32, servo connectors, power input, and remote IMU cable to plug into a permanent board while keeping the main modules reusable.
-
-A custom Fusion 360 mechanical frame and electronics enclosure were also designed to mount the PCB, battery holder, wiring, servos, and moving platform into a more complete final build.
+A custom KiCad carrier PCB replaced the final breadboard wiring while keeping the ESP32 and MPU6050 removable.
 
 ---
 
 ## Current Status
 
 - [x] Wokwi simulation completed
-- [x] MPU6050 angle reading implemented
+- [x] MPU6050 angle measurement implemented
 - [x] Complementary filter implemented
-- [x] PID control loop implemented
-- [x] Roll and pitch servo control working
-- [x] WiFi dashboard working
-- [x] Manual dashboard control working
-- [x] Reset-to-flat control working
+- [x] PID control implemented
+- [x] Roll and pitch servo control implemented
+- [x] WiFi dashboard implemented
+- [x] Dashboard setpoint control implemented
+- [x] Reset-to-flat control implemented
 - [x] Heartbeat safety system implemented
-- [x] Real ESP32 breadboard test completed
-- [x] Real servo and IMU behaviour tested
-- [x] KiCad carrier PCB schematic completed
-- [x] KiCad PCB layout routed
-- [x] PCB DRC check passed
-- [x] 3D PCB preview generated
-- [x] PCB ordered
-- [x] Fusion 360 mechanical frame designed
-- [x] Electronics enclosure and removable lid designed
-- [x] 3D print files exported for manufacturing
-- [x] 3D printed parts submitted for manufacturing quote/order
-- [ ] 3D printed parts received
-- [ ] PCB received
-- [ ] Final mechanical assembly
-- [ ] Final PID tuning on printed frame
-- [ ] Final demo video
-
----
-
-## Demo / Design Preview
-
-### Full Fusion 360 Assembly
-
-<img src="docs/images/cad_full_assembly.png" alt="Fusion 360 full assembly of ESP32 self-levelling gimbal with electronics box" width="550">
-
-### Electronics Box
-
-<img src="docs/images/cad_electronics_box.png" alt="Fusion 360 electronics box for ESP32 PCB, battery holder, wiring and cable cutouts" width="500">
-
-### Electronics Box Lid
-
-<img src="docs/images/cad_electronics_lid.png" alt="Fusion 360 removable friction-fit lid for ESP32 gimbal electronics box" width="500">
-
-### Roll Servo Bracket
-
-<img src="docs/images/cad_roll_servo_bracket.png" alt="Fusion 360 roll servo bracket for ESP32 self-levelling gimbal" width="500">
-
-### Base / Pitch Servo Bracket
-
-<img src="docs/images/cad_base_pitch_servo_bracket.png" alt="Fusion 360 pitch servo bracket and base support for ESP32 self-levelling gimbal" width="500">
-
-### Stabilising Platform
-
-<img src="docs/images/cad_stabilizing_platform.png" alt="Fusion 360 moving stabilising platform with servo horn mounting holes" width="500">
-
-### 3D PCB Preview
-
-<img src="docs/images/kicad-pcb-preview.png" alt="3D preview of ESP32 self-levelling gimbal carrier PCB" width="500">
-
-### PCB Routing Layout
-
-<img src="docs/images/kicad-pcb-editor-close-up.png" alt="KiCad PCB routing layout for ESP32 gimbal carrier board" width="500">
-
-### Initial Schematic Sheet
-
-<img src="docs/images/ESP32 Intial Gimbal Schematic PCB.png" alt="KiCad initial schematic for ESP32 gimbal carrier board" width="650">
-
-### Final Carrier Board Schematic
-
-<img src="docs/images/kicad-schematic-close-up.png" alt="KiCad schematic for ESP32 gimbal carrier board" width="650">
-
-### Full Schematic Sheet
-
-<img src="docs/images/kicad-schematic-full.png" alt="Full KiCad schematic sheet for ESP32 gimbal PCB" width="650">
-
----
-
-## Simulation Preview
-
-The project was first built and tested in Wokwi before moving to real hardware.
-
-The simulation was used to check:
-
-- ESP32 code structure
-- MPU6050 angle readings
-- PID logic
-- servo response
-- WiFi dashboard layout
-- manual dashboard control
-- reset-to-flat behaviour
-
-### Web Dashboard Simulation
-
-<img src="docs/images/dashboard.png" alt="ESP32 self-levelling gimbal WiFi dashboard" width="700">
-
-### Wokwi Circuit Simulation
-
-<img src="docs/images/wokwi-circuit.png" alt="Wokwi circuit wiring layout for ESP32 gimbal" width="500">
+- [x] Real breadboard test completed
+- [x] KiCad schematic completed
+- [x] KiCad PCB layout completed
+- [x] PCB DRC passed
+- [x] Carrier PCB manufactured
+- [x] Fusion 360 frame modifications completed
+- [x] Electronics enclosure and lid designed
+- [x] 3D printed parts manufactured
+- [x] PCB soldered and assembled
+- [x] Final mechanical assembly completed
+- [x] Mechanical neutral offsets calibrated
+- [x] Limited-angle dual-axis PID response tested
+- [x] Final demonstration video recorded
 
 ---
 
 ## Features
 
-- Two-axis roll and pitch stabilisation
-- MPU6050 accelerometer and gyroscope angle sensing
-- Complementary filter for smoother roll/pitch estimation
-- PID control loop for real-time attitude correction
-- MG996R servo control
+- Two-axis roll and pitch correction
+- MPU6050 accelerometer and gyroscope sensing
+- Complementary filtering
+- Independent roll and pitch PID control
+- Two MG996R servos
+- Calibrated mechanical neutral offsets
+- Restricted servo travel for stable prototype operation
 - ESP32-hosted WiFi dashboard
-- Live roll and pitch values in browser
-- Manual dashboard control mode
-- Reset-to-flat button
-- Heartbeat safety system:
-  - if the dashboard disconnects, the ESP32 returns to stabilisation mode
-- Real breadboard hardware test
+- Live roll and pitch telemetry
+- Browser setpoint control
+- Reset-to-flat command
+- Dashboard heartbeat safety fallback
 - Custom KiCad carrier PCB
-- Remote MPU6050 connector so the IMU can be mounted on the moving platform
-- 1000 µF bulk capacitor on the 5V servo rail
-- Separate 5V servo power input
-- Common ground between ESP32, servo supply, and IMU
-- Custom Fusion 360 mechanical frame modifications
-- 3D printable electronics enclosure for PCB, battery holder, boost converter and wiring
-- Removable friction-fit electronics lid
-- Cable cutouts for USB, servo wiring, switch wiring and remote MPU6050 cable
-- M3 PCB mounting holes for screw/nut/washer spacing
+- Remote MPU6050 connector
+- Separate 5 V servo rail
+- 1000 µF bulk capacitor
+- Socketed ESP32
+- Modified Fusion 360 frame
+- 3D printed electronics enclosure
+- Removable enclosure lid
+- External power switch
+- M3 PCB mounting hardware
 
 ---
 
 ## Hardware Used
 
-| Component                            | Purpose                                        |
-| ------------------------------------ | ---------------------------------------------- |
-| ESP32 Dev Board                      | Main microcontroller and WiFi dashboard server |
-| MPU6050 IMU                          | Measures roll and pitch angle                  |
-| MG996R Servo x2                      | Controls roll and pitch axes                   |
-| External 5V Supply / Boost Converter | Powers the servos                              |
-| 2x 18650 Battery Holder              | Portable power source for the build            |
-| 1000 µF Electrolytic Capacitor       | Reduces servo voltage dips                     |
-| 100 nF Ceramic Capacitors            | Local power decoupling                         |
-| Custom KiCad Carrier PCB             | Permanent wiring carrier board                 |
-| Jumper / Servo Wires                 | Connects remote IMU and servos                 |
-| 3D Printed Gimbal Frame              | Holds the roll and pitch servo mechanism       |
-| 3D Printed Electronics Box           | Holds the PCB, battery holder and wiring       |
-| 3D Printed Removable Lid             | Covers and protects the electronics bay        |
-| M3 Screws / Nuts / Washers           | Mounts PCB and frame parts                     |
-| M2 Self-Tapping Screws               | Fixes servo horn to moving platform            |
+| Component                      | Purpose                                       |
+| ------------------------------ | --------------------------------------------- |
+| ESP32 Dev Board                | Main controller and WiFi dashboard server     |
+| MPU6050 IMU                    | Measures platform roll and pitch              |
+| MG996R Servo x2                | Controls roll and pitch axes                  |
+| MT3608 Boost Converter         | Boosts battery voltage to the servo rail      |
+| Parallel 18650 Battery Holder  | Portable servo power source                   |
+| 1000 µF Electrolytic Capacitor | Reduces short servo-rail voltage disturbances |
+| 100 nF Ceramic Capacitors      | Local decoupling                              |
+| Custom KiCad Carrier PCB       | Permanent carrier and interconnection board   |
+| Jumper and Servo Wires         | Connects servos and remote IMU                |
+| 3D Printed Gimbal Frame        | Supports the two-axis mechanism               |
+| 3D Printed Electronics Box     | Holds PCB, batteries and power electronics    |
+| Removable 3D Printed Lid       | Covers the electronics enclosure              |
+| M3 Screws, Nuts and Washers    | PCB and frame fastening                       |
+| Small Servo-Horn Screws        | Connects servo horns to printed parts         |
 
 ---
 
 ## Final Pin Connections
 
-| Module      | Pin      | ESP32 / Power Connection            |
-| ----------- | -------- | ----------------------------------- |
-| MPU6050     | SDA      | GPIO 21                             |
-| MPU6050     | SCL      | GPIO 22                             |
-| MPU6050     | VCC      | ESP32 3.3V                          |
-| MPU6050     | GND      | Common GND                          |
-| Roll Servo  | Signal   | GPIO 13                             |
-| Pitch Servo | Signal   | GPIO 19                             |
-| Servos      | VCC      | External 5V rail                    |
-| Servos      | GND      | External GND rail                   |
-| ESP32       | VIN / 5V | 5V input rail if externally powered |
-| ESP32       | GND      | Common GND                          |
-
-> The MPU6050 is connected through a remote 4-pin connector so it can be mounted on the moving platform instead of fixed to the PCB.
+| Module      | Pin    | ESP32 / Power Connection    |
+| ----------- | ------ | --------------------------- |
+| MPU6050     | SDA    | GPIO 21                     |
+| MPU6050     | SCL    | GPIO 22                     |
+| MPU6050     | VCC    | ESP32 3.3 V                 |
+| MPU6050     | GND    | Common GND                  |
+| Roll Servo  | Signal | GPIO 13                     |
+| Pitch Servo | Signal | GPIO 19                     |
+| Servos      | VCC    | External regulated 5 V rail |
+| Servos      | GND    | External GND rail           |
+| ESP32       | USB    | USB power and programming   |
+| ESP32       | GND    | Common GND                  |
 
 Remote IMU connector order:
 
@@ -213,188 +188,243 @@ GND
 
 ---
 
-## Power Setup
+## Breadboard Prototype
 
-The servos are powered from a separate 5V rail because MG996R servos can draw much more current than the ESP32 can safely provide.
+The system was validated on a breadboard before designing the carrier PCB.
 
-The ESP32, servo supply, and MPU6050 must share a common ground.
+<img src="docs/images/BreadBoard.png" alt="Breadboard prototype of ESP32 self-levelling gimbal electronics" width="700">
 
-```text
-External 5V supply → servo 5V rail
-External GND       → servo GND rail
-ESP32 GND          → common GND
-MPU6050 VCC        → ESP32 3.3V
-MPU6050 GND        → common GND
-```
+The breadboard stage was used to verify:
 
-The carrier PCB includes:
-
-- 5V power input connector
-- 1000 µF capacitor across 5V and GND
-- 100 nF capacitors on logic power rails
-- 1 mm traces for 5V and GND power paths
-- 0.4 mm trace for 3.3V
-- 0.3 mm traces for signal lines
+- ESP32 and MPU6050 communication
+- servo directions
+- complementary-filter behaviour
+- PID response
+- WiFi dashboard operation
+- power-rail separation
 
 ---
 
-## Servo Power Warning
+## Simulation
 
-Do not power MG996R servos directly from:
+The project was first developed in Wokwi before moving to physical hardware.
 
-```text
-ESP32 3.3V pin
-ESP32 USB 5V pin
-```
+<p align="center">
+  <img src="docs/images/wokwi-circuit.png" alt="Wokwi circuit simulation" width="48%">
+  <img src="docs/images/WokwiWithValues.png" alt="Wokwi simulation with live values" width="48%">
+</p>
 
-A weak or noisy servo power supply can cause:
+### Simulated Dashboard
 
-- servo jitter
-- ESP32 brownouts
-- WiFi dropouts
-- unstable PID correction
-- random resets
-- inconsistent angle response
+<img src="docs/images/dashboard.png" alt="Simulated ESP32 gimbal dashboard" width="800">
 
-The 1000 µF capacitor helps absorb short servo current spikes, but it does not replace a proper 5V supply.
+The simulation was used to validate:
+
+- firmware structure
+- MPU6050 angle calculations
+- servo response logic
+- dashboard design
+- setpoint control
+- heartbeat fallback
 
 ---
 
-## Carrier PCB Design
+## Carrier PCB Development
 
-The final carrier PCB was designed in KiCad to make the project cleaner and more reusable.
+The custom carrier PCB was designed in KiCad after breadboard testing.
 
-The board includes:
+### Initial Schematic
 
-- ESP32 left/right socket headers
+<img src="docs/images/ESP32 Intial Gimbal Schematic PCB.png" alt="Initial ESP32 gimbal schematic" width="800">
+
+### Final Schematic
+
+<p align="center">
+  <img src="docs/images/kicad-schematic-close-up.png" alt="KiCad PCB schematic close-up" width="48%">
+  <img src="docs/images/kicad-schematic-full.png" alt="Full KiCad PCB schematic" width="48%">
+</p>
+
+### PCB Routing
+
+<p align="center">
+  <img src="docs/images/KiCad PCB Editor Close Up.png" alt="KiCad PCB routing close-up" width="48%">
+  <img src="docs/images/KiCad PCB Editor.png" alt="Full KiCad PCB editor layout" width="48%">
+</p>
+
+### 3D PCB Preview
+
+<img src="docs/images/kicad-pcb-preview.png" alt="KiCad 3D preview of ESP32 gimbal PCB" width="550">
+
+The PCB includes:
+
+- ESP32 socket headers
 - roll servo header
 - pitch servo header
-- remote MPU6050 connector
-- 5V power input
-- 1000 µF servo rail capacitor
+- remote MPU6050 header
+- external servo-power input
+- 1000 µF bulk capacitor
 - 100 nF decoupling capacitors
+- labelled silkscreen
 - M3 mounting holes
-- labelled silkscreen for all connectors
-- wide 5V and GND traces for servo current
-
-The ESP32 and MPU6050 are not permanently soldered to the PCB. The design uses sockets/connectors so the main modules can be removed and reused.
+- removable modules and connectors
 
 ---
 
-## Mechanical CAD and 3D Printed Frame
+## Manufactured PCB
 
-The mechanical design was completed in Fusion 360.
+### Bare PCB
 
-The original downloaded self-stabilising gimbal model was used as a starting point, but the electronics holder and frame layout were modified to fit the final ESP32 carrier PCB and make the build easier to assemble.
+<p align="center">
+  <img src="docs/images/Front Of PCB.png" alt="Front side of manufactured ESP32 gimbal PCB" width="31%">
+  <img src="docs/images/Back Of PCB .png" alt="Rear side of manufactured ESP32 gimbal PCB" width="31%">
+  <img src="docs/images/Both Sides of PCB.png" alt="Both sides of manufactured ESP32 gimbal PCB" width="31%">
+</p>
 
-The final mechanical design uses:
+### Assembled PCB
 
-- a two-axis roll/pitch gimbal frame
-- MG996R-style servo mounting positions
-- a custom electronics box mounted below the gimbal
-- a removable friction-fit lid
-- PCB mounting holes for M3 screws
-- extra internal space for wiring slack
-- cutouts for USB, servo wires, switch wiring and the remote MPU6050 cable
-- a moving platform with servo horn mounting holes
+<img src="docs/images/Full PCB.gif" alt="Assembled ESP32 gimbal carrier PCB" width="600">
 
-The yaw-axis motor from the original model was removed because the project only needs roll and pitch self-levelling. This reduced unnecessary weight, removed an unused degree of freedom, and simplified the control problem.
+The ESP32 plugs into female headers and can be removed without desoldering. The MPU6050 also connects through a removable four-wire cable.
 
-The electronics enclosure was designed as a separate box rather than forcing all electronics into the original handle. This made the PCB, battery holder, boost converter and wiring easier to access and repair.
+---
+
+## Mechanical CAD
+
+The original mechanical geometry was based on the HowToMechatronics self-stabilising platform and modified in Fusion 360.
+
+### Full Assembly
+
+<img src="docs/images/cad_full_assembly.png" alt="Fusion 360 full assembly of ESP32 self-levelling gimbal" width="550">
+
+### Individual CAD Parts
+
+<p align="center">
+  <img src="docs/images/cad_roll_servo_bracket.png" alt="Fusion 360 roll servo bracket" width="31%">
+  <img src="docs/images/cad_base_pitch_servo_bracket.png" alt="Fusion 360 base and pitch servo bracket" width="31%">
+  <img src="docs/images/cad_stabilizing_platform.png" alt="Fusion 360 stabilising platform" width="31%">
+</p>
+
+<p align="center">
+  <img src="docs/images/cad_electronics_box.png" alt="Fusion 360 electronics box" width="48%">
+  <img src="docs/images/cad_electronics_lid.png" alt="Fusion 360 electronics lid" width="48%">
+</p>
+
+Main mechanical changes included:
+
+- removal of the unused yaw axis
+- revised MG996R mounting
+- custom electronics enclosure
+- removable friction-fit lid
+- PCB mounting holes
+- battery and boost-converter space
+- USB, servo, switch and IMU cable cutouts
+- revised platform-to-servo-horn attachment
 
 ---
 
 ## 3D Printed Parts
 
-The exported print parts are:
+<p align="center">
+  <img src="docs/images/Brackets and table.png" alt="3D printed gimbal brackets and moving platform" width="48%">
+  <img src="docs/images/Electronics Box.png" alt="3D printed electronics enclosure and lid" width="48%">
+</p>
 
-| Part                                       | Purpose                                                 |
-| ------------------------------------------ | ------------------------------------------------------- |
-| `Gimbal_Electronics_Handle_Box_Final.step` | Main electronics box for PCB, battery holder and wiring |
-| `ESP32 Electrical Handle Lid Final.step`   | Removable friction-fit electronics lid                  |
-| `Roll Servo Final.step`                    | Roll-axis servo bracket                                 |
-| `Base Pitch servo Final.step`              | Base/pitch servo bracket                                |
-| `Self-Stabilizing Platform Final.step`     | Moving platform/table section                           |
-
-The parts were exported separately so they can be printed as independent pieces and assembled using screws, nuts, washers and servo hardware.
-
----
-
-## Planned 3D Print Settings
-
-The parts were prepared for external 3D printing using:
+The parts were manufactured using:
 
 ```text
 Material: PLA
 Process: FDM
 Infill: 60%
 Units: mm
-Threads/tapped holes: No
-Inserts: No
-Assembly: No
 ```
 
-PLA was chosen because it is cheap, strong enough for the demo, and suitable for functional prototype brackets and enclosures.
+### Mechanical Limitation
 
-The design does not rely on printed threads. Mechanical fastening is handled with external screws, nuts and washers.
+The printed brackets and platform showed some flex and slight deformation under load.
+
+Software neutral offsets were used to compensate for the assembled resting angle:
+
+```cpp
+constexpr int ROLL_NEUTRAL = 99;
+constexpr int PITCH_NEUTRAL = 85;
+```
+
+These offsets correct the resting position but do not eliminate the underlying structural flex.
 
 ---
 
-## Mechanical Assembly Plan
+## Power Architecture
+
+The ESP32 is powered separately through USB during development and demonstration.
+
+The servos use an external 5 V rail because MG996R servos can draw significantly more current than the ESP32 should supply.
 
 ```text
-Electronics box → supports the gimbal frame
-PCB → mounted inside box using M3 screws, nuts and washers
-Battery holder → mounted inside electronics box
-Boost converter → mounted inside electronics box
-MPU6050 → mounted remotely on moving platform
-Servo horn → fixed to platform using small self-tapping screws
-Lid → friction-fit removable cover
+Parallel 18650 cells
+        ↓
+MT3608 boost converter
+        ↓
+5 V servo rail
+        ↓
+Roll and pitch servos
+
+ESP32 USB GND ───────── Common GND
+Servo supply GND ────── Common GND
+MPU6050 GND ─────────── Common GND
 ```
 
-The PCB is intentionally kept removable. The ESP32 plugs into socket headers, the MPU6050 connects through a remote cable, and the servos connect through headers rather than being permanently soldered.
+The carrier PCB includes:
 
----
+- external 5 V and GND input
+- 1000 µF bulk capacitor
+- 100 nF decoupling capacitors
+- 1.0 mm 5 V and GND traces
+- 0.4 mm 3.3 V trace
+- 0.3 mm signal traces
 
-## Why the MPU6050 Is Remote
+### Power Limitation
 
-The MPU6050 must measure the angle of the moving platform.
+The final prototype became unstable during large or aggressive servo movements because the power system could not reliably support the resulting current transients.
 
-If the IMU is fixed to the base or handle, it measures the wrong body and the PID loop corrects the wrong motion.
+The validated prototype therefore uses restricted servo travel:
 
-Final design:
+```cpp
+constexpr int ROLL_NEUTRAL = 99;
+constexpr int PITCH_NEUTRAL = 85;
 
-```text
-Main PCB → fixed to handle/base
-MPU6050 → mounted on moving platform
-Connection → 4-wire remote cable
+constexpr int ROLL_MIN_POSITION = ROLL_NEUTRAL - 5;
+constexpr int ROLL_MAX_POSITION = ROLL_NEUTRAL + 5;
+
+constexpr int PITCH_MIN_POSITION = PITCH_NEUTRAL - 5;
+constexpr int PITCH_MAX_POSITION = PITCH_NEUTRAL + 5;
 ```
 
-The I2C wires should be kept reasonably short and routed away from servo power wires.
+A future revision would use a higher-current 5-6 V BEC or buck-boost supply and stiffer printed brackets.
 
 ---
 
 ## WiFi Dashboard
 
-The ESP32 connects to WiFi and serves a local browser dashboard.
+The ESP32 connects to the local WiFi network and hosts the dashboard directly.
 
-For Wokwi simulation:
-
-```cpp
-const char* ssid = "Wokwi-GUEST";
-const char* password = "";
-```
-
-For real hardware, update the WiFi credentials in `main.cpp`:
+For real hardware:
 
 ```cpp
-const char* ssid     = "YOUR_WIFI_SSID";
+const char* ssid = "YOUR_WIFI_SSID";
 const char* password = "YOUR_WIFI_PASSWORD";
 ```
 
-Once connected, the ESP32 prints its IP address to the serial monitor.
+After startup, the ESP32 prints its IP address in Serial Monitor.
 
-Open that IP address in a browser to access the dashboard.
+Open:
+
+```text
+http://ESP32_IP_ADDRESS
+```
+
+The PC or phone must be connected to the same local network.
+
+> Do not commit real WiFi credentials to the public repository.
 
 ---
 
@@ -402,116 +432,106 @@ Open that IP address in a browser to access the dashboard.
 
 ### Stabilise Mode
 
-Default mode.
-
-The ESP32 reads roll and pitch from the MPU6050, calculates the error from level, and uses PID output to move the servos.
+The default mode holds a target roll and pitch of 0° relative to startup calibration.
 
 ```text
-Target angle = 0°
-Measured angle = MPU6050 filtered angle
-Error = target angle - measured angle
+Error = target angle - filtered measured angle
 ```
 
-### Dashboard Control Mode
+### Setpoint Control Mode
 
-Manual control mode.
+The browser sliders change the requested roll and pitch targets.
 
-The browser sliders set the target roll and pitch angles. The servos move to hold those target angles.
+This mode is useful for:
 
-Useful for:
-
-- checking servo direction
-- testing dashboard control
-- debugging PID response
-- showing manual control in a demo
+- checking servo directions
+- verifying both axes
+- testing target-angle control
+- demonstrating remote interaction
 
 ### Heartbeat Safety
 
-The browser sends a heartbeat signal while the dashboard is open.
+The browser sends a repeated heartbeat while setpoint mode is active.
 
-If the ESP32 stops receiving the heartbeat, it automatically returns to stabilise mode.
-
-This prevents the system from staying stuck in manual control mode after the browser closes.
+If the heartbeat stops, the ESP32 returns to stabilisation mode.
 
 ---
 
 ## PID Control
 
-Current baseline PID values:
+Final prototype baseline:
 
 | Axis  |  Kp |  Ki |  Kd |
 | ----- | --: | --: | --: |
-| Roll  | 2.5 | 0.0 | 0.4 |
-| Pitch | 2.5 | 0.0 | 0.4 |
+| Roll  | 1.5 | 0.0 | 0.1 |
+| Pitch | 1.5 | 0.0 | 0.1 |
 
-These values worked as a starting point but may need adjustment once the final 3D printed frame is assembled.
+`Ki` was left at zero because integral correction was not required for the limited-angle demonstration.
 
-Recommended tuning process:
+`Kd` was used to reduce settling oscillation after movement.
 
-1. Set `Ki = 0` and `Kd = 0`.
-2. Increase `Kp` until the platform corrects quickly.
-3. If it oscillates, reduce `Kp`.
-4. Add `Kd` to reduce overshoot.
-5. Only add `Ki` if there is a steady offset that does not disappear.
+The gains are prototype-specific because response depends on:
+
+- printed-part stiffness
+- platform mass
+- servo geometry
+- centre of gravity
+- power stability
+- wiring drag
 
 ---
 
-## How It Works
+## Calibration and Startup
 
-The MPU6050 provides accelerometer and gyroscope data.
+The assembled platform must remain level and still during startup calibration.
 
-The accelerometer gives a gravity-based angle estimate but is noisy during movement.
+1. Place the base on a stable surface.
+2. Support the moving platform near level.
+3. Power the system.
+4. Keep the IMU completely still during calibration.
+5. Wait for WiFi connection and Serial Monitor output.
+6. Remove the support.
+7. Apply only small, controlled disturbances.
 
-The gyroscope gives smooth short-term angle changes but drifts over time.
-
-A complementary filter combines both:
-
-```text
-filtered angle = gyro short-term estimate + accelerometer long-term correction
-```
-
-The ESP32 then compares the filtered angle with the target angle:
-
-```text
-error = target angle - measured angle
-```
-
-The PID controller calculates the correction:
-
-```text
-PID output = proportional + integral + derivative correction
-```
-
-The correction is converted into servo angle commands:
-
-```text
-MPU6050 → complementary filter → PID → servo output → platform correction
-```
+The startup orientation becomes the sensor reference.
 
 ---
 
 ## Problems Faced and Fixes
 
-| Problem                                                         | Fix                                                             |
-| --------------------------------------------------------------- | --------------------------------------------------------------- |
-| Dashboard layout was too wide                                   | Reworked CSS layout and container sizing                        |
-| Manual sliders needed cleaner control                           | Added dashboard control mode                                    |
-| Browser disconnect could leave system in manual mode            | Added heartbeat safety system                                   |
-| GPIO12 was originally used for pitch servo                      | Changed pitch servo to GPIO19 to avoid ESP32 boot issues        |
-| Servos caused high current demand                               | Added separate 5V servo rail and 1000 µF capacitor              |
-| MPU6050 needed to move with the platform                        | Changed PCB design to use a remote IMU connector                |
-| ESP32 module needed to stay reusable                            | Used 2x 1x15 socket headers                                     |
-| PCB mounting needed to fit a printed frame                      | Added M3 mounting holes                                         |
-| Original gimbal model included an unnecessary yaw motor         | Removed the yaw-axis design and kept the system two-axis only   |
-| Original handle did not fit the PCB, battery and wiring cleanly | Designed a new electronics box and removable lid in Fusion 360  |
-| Servo horn mounting holes were not suitable for large screws    | Planned smaller self-tapping screws for horn-to-platform fixing |
-| Electronics needed to remain serviceable                        | Used a removable lid and accessible PCB/battery layout          |
+| Problem                                         | Fix / Engineering Decision                                     |
+| ----------------------------------------------- | -------------------------------------------------------------- |
+| Dashboard layout was too wide                   | Reworked CSS layout and sizing                                 |
+| Browser could leave system in setpoint mode     | Added heartbeat fallback                                       |
+| GPIO12 caused boot-related concerns             | Moved pitch signal to GPIO19                                   |
+| Servos required high current                    | Added separate 5 V rail and 1000 µF capacitor                  |
+| MPU6050 needed to measure the moving platform   | Added remote four-pin IMU connector                            |
+| ESP32 needed to remain reusable                 | Used two 1x15 female socket headers                            |
+| Original model included an unnecessary yaw axis | Reduced design to roll and pitch                               |
+| Original handle did not fit the electronics     | Designed a separate electronics enclosure                      |
+| Printed frame sagged under load                 | Added independent roll and pitch neutral offsets               |
+| Platform was slightly deformed                  | Calibrated assembled resting position in software              |
+| Large servo movement caused instability         | Restricted both axes to ±5° around neutral                     |
+| Settling response oscillated after movement     | Reduced gains and adjusted derivative damping                  |
+| OLED added unnecessary integration complexity   | Removed OLED and retained dashboard + Serial Monitor telemetry |
+
+---
+
+## Known Limitations
+
+- Servo travel is restricted to a narrow operating envelope.
+- Large or aggressive disturbances can exceed the available servo power.
+- The PLA structure has visible compliance and small alignment errors.
+- Startup calibration requires the platform to be held level and still.
+- The current prototype demonstrates correction rather than precision stabilisation.
+- The OLED planned in early versions was removed from the final build.
+- A higher-current regulator and stiffer mechanical revision would be required for wider-range operation.
 
 ---
 
 ## Software
 
-Built with PlatformIO in VS Code using the Arduino framework.
+Built using PlatformIO in VS Code with the Arduino framework.
 
 ### `platformio.ini`
 
@@ -530,72 +550,17 @@ lib_deps =
 
 ## How to Run
 
-1. Clone the repo.
-2. Open the project in VS Code.
-3. Install the PlatformIO extension.
-4. Connect the ESP32 by USB.
-5. Build the project.
-6. Upload it to the ESP32.
-7. Open the serial monitor at `115200` baud.
-8. Wait for the ESP32 to print its IP address.
-9. Open that IP address in a browser.
-
----
-
-## Wokwi Simulation
-
-1. Open the project in VS Code.
-2. Build the PlatformIO project.
-3. Open `diagram.json`.
-4. Run the Wokwi simulation.
-5. Open the ESP32 dashboard URL shown in the serial monitor.
-
----
-
-## Project Pipeline
-
-- [x] Wokwi simulation
-- [x] MPU6050 angle reading
-- [x] Complementary filter
-- [x] PID control loop
-- [x] Servo control
-- [x] WiFi dashboard
-- [x] Manual dashboard mode
-- [x] Dashboard safety heartbeat
-- [x] Real breadboard hardware test
-- [x] KiCad schematic
-- [x] KiCad carrier PCB layout
-- [x] PCB DRC check
-- [x] PCB 3D preview
-- [x] Upload final KiCad files
-- [x] Order PCB
-- [x] Design 3D printed frame in Fusion 360
-- [x] Design electronics box and removable lid
-- [x] Export 3D print files
-- [x] Submit 3D print files for manufacturing
-- [ ] Receive PCB
-- [ ] Receive 3D printed parts
-- [ ] Mount PCB to electronics box
-- [ ] Mount MPU6050 to moving platform
-- [ ] Final mechanical assembly
-- [ ] Final PID tuning
-- [ ] Final demo video
-- [ ] Portfolio write-up
-
----
-
-## Planned Demo Video
-
-The final demo video will show:
-
-- gimbal correcting roll and pitch movement
-- dashboard showing live angle values
-- manual dashboard control
-- reset-to-flat behaviour
-- PCB mounted inside/onto the gimbal frame
-- remote MPU6050 mounted on the moving platform
-- electronics box and removable lid
-- final 3D printed frame assembly
+1. Clone the repository.
+2. Open it in VS Code.
+3. Install PlatformIO.
+4. Add local WiFi credentials without committing them.
+5. Connect the ESP32 through USB.
+6. Build and upload the firmware.
+7. Open Serial Monitor at `115200` baud.
+8. Keep the platform level and still during calibration.
+9. Read the ESP32 IP address.
+10. Open the IP address in a browser on the same network.
+11. Test only small roll and pitch disturbances with the current power system.
 
 ---
 
@@ -605,25 +570,34 @@ The final demo video will show:
 ESP32-Self-Levelling-Gimbal/
 ├── cad/
 │   └── exported-print-files/
-│       ├── Base Pitch servo Final.step
-│       ├── ESP32 Electrical Handle Lid Final.step
-│       ├── Gimbal_Electronics_Handle_Box_Final.step
-│       ├── Roll Servo Final.step
-│       └── Self-Stabilizing Platform Final.step
 ├── docs/
 │   └── images/
-│       ├── dashboard.png
-│       ├── wokwi-circuit.png
-│       ├── kicad-pcb-preview.png
-│       ├── kicad-schematic-close-up.png
-│       ├── kicad-schematic-full.png
-│       ├── kicad-pcb-editor-close-up.png
-│       ├── cad_full_assembly.png
+│       ├── Back Of PCB .png
+│       ├── Bird eye.gif
+│       ├── Both Sides of PCB.png
+│       ├── Brackets and table.png
+│       ├── BreadBoard Prototype.png
+│       ├── cad_base_pitch_servo_bracket.png
 │       ├── cad_electronics_box.png
 │       ├── cad_electronics_lid.png
 │       ├── cad_roll_servo_bracket.png
-│       ├── cad_base_pitch_servo_bracket.png
-│       └── cad_stabilizing_platform.png
+│       ├── cad_stabilizing_platform.png
+│       ├── Diagonal.gif
+│       ├── Electronics Box.png
+│       ├── ESP32 Intial Gimbal Schematic PCB.png
+│       ├── ESP32_Gimbal CAD_Assembly.png
+│       ├── ESP32_Gimbal PCB_Preview.png
+│       ├── Front Of PCB.png
+│       ├── front.gif
+│       ├── Full PCB.gif
+│       ├── Inside.gif
+│       ├── KiCad PCB Editor Close Up.png
+│       ├── KiCad PCB Editor.png
+│       ├── KiCad PCB Schematic Close Up.png
+│       ├── KiCad PCB Schematic.png
+│       ├── Simulated Dashboard.png
+│       ├── Wokwi Circuit.png
+│       └── Wokwi With Values.png
 ├── include/
 ├── lib/
 ├── src/
@@ -637,6 +611,19 @@ ESP32-Self-Levelling-Gimbal/
 
 ---
 
+## Future Improvements
+
+- Replace the MT3608 system with a higher-current 5-6 V BEC or buck-boost converter.
+- Use thicker and stiffer printed brackets.
+- Improve cable routing and strain relief.
+- Increase the validated servo range gradually.
+- Add quantitative disturbance and settling-time tests.
+- Store WiFi credentials in an ignored `secrets.h`.
+- Add automatic calibration validation.
+- Add data logging for angle error and PID output.
+
+---
+
 ## Author
 
 **Farhan Ali**  
@@ -646,22 +633,18 @@ Engineering Student / Embedded Systems Project
 - Portfolio: [Farhan Ali Engineering Portfolio](https://pacific-attention-6cd.notion.site/Farhan-Ali-Engineering-Portfolio-2c0495dbdc658028a0decf9447459ea6#367495dbdc65808eb791f741fc051231)
 - LinkedIn: [Farhan Ali](https://www.linkedin.com/in/farhan-ali-95047a245/)
 
-Built as an independent engineering project to practise embedded systems, control systems, PID tuning, IMU sensor fusion, PCB design, and mechanical prototyping.
+Built as an independent project covering embedded systems, control systems, PCB design, CAD, additive manufacturing, hardware debugging, and prototype validation.
 
 ---
 
 ## Acknowledgements
 
-PCB fabrication and 3D printed part manufacturing for this project were supported by PCBWay through their student/non-profit project sponsorship programme.
+PCB fabrication and 3D printed-part manufacturing were supported by PCBWay through its student/non-profit project sponsorship programme.
 
-The sponsored manufacturing support helped move the project from completed KiCad PCB files and Fusion 360 CAD models into a physical prototype suitable for final assembly, testing, and documentation.
+The original mechanical geometry was based on the HowToMechatronics project:
 
-PCBWay: https://www.pcbway.com/
+[DIY Arduino Gimbal | Self-Stabilizing Platform](https://howtomechatronics.com/projects/diy-arduino-gimbal-self-stabilizing-platform/)
 
-The original mechanical gimbal bracket and stabilising platform geometry were based on the DIY Arduino Gimbal project by HowToMechatronics: [DIY Arduino Gimbal | Self-Stabilizing Platform](https://howtomechatronics.com/projects/diy-arduino-gimbal-self-stabilizing-platform/)
+The design was adapted for an ESP32-based control system with a custom PCB, revised electronics enclosure, remote MPU6050, WiFi dashboard, modified power system, and revised mechanical layout.
 
-I adapted the mechanical design for my own ESP32-based version, including changes to the electronics enclosure, PCB integration, wiring layout, power system, Wi-Fi dashboard, and control implementation.
-
-AI tools were used for planning support, debugging help, code review, and documentation improvements.
-
-The hardware choices, circuit changes, PID testing, PCB design decisions, CAD changes, mechanical layout decisions, and final project direction were reviewed, tested, and understood by the author.
+AI tools were used for planning, debugging assistance, code review, and documentation editing. Hardware selection, circuit changes, PID testing, PCB decisions, CAD modifications, mechanical assembly, fault isolation, and final validation were performed and reviewed by the author.
