@@ -33,15 +33,15 @@ The video shows:
 ## Final Build
 
 <p align="center">
-  <img src="docs/images/front.gif" alt="Front view of completed ESP32 self-levelling gimbal" width="30.5%">
-  <img src="docs/images/Diagonal.gif" alt="Diagonal view of completed ESP32 self-levelling gimbal" width="30.15%">
-  <img src="docs/images/Bird eye.gif" alt="Bird's-eye view of completed ESP32 self-levelling gimbal" width="22%">
+  <img src="docs/images/front.png" alt="Front view of completed ESP32 self-levelling gimbal" width="30.5%">
+  <img src="docs/images/Diagonal.png" alt="Diagonal view of completed ESP32 self-levelling gimbal" width="30.15%">
+  <img src="docs/images/Bird eye.png" alt="Bird's-eye view of completed ESP32 self-levelling gimbal" width="22%">
 </p>
 
 ### Internal Electronics
 
 <p align="center">
-  <img src="docs/images/Inside.gif" alt="Internal electronics showing custom PCB, ESP32, battery holder and power electronics" width="48%">
+  <img src="docs/images/Inside.png" alt="Internal electronics showing custom PCB, ESP32, battery holder and power electronics" width="48%">
   <img src="docs/images/Electronics Box.png" alt="3D printed electronics box and removable lid" width="48%">
 </p>
 
