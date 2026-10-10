@@ -629,7 +629,7 @@ ESP32-Self-Levelling-Gimbal/
 Engineering Student / Embedded Systems Project
 
 - GitHub: [farhan10904](https://github.com/farhan10904)
-- Portfolio: [Farhan Ali Engineering Portfolio](https://pacific-attention-6cd.notion.site/Farhan-Ali-Engineering-Portfolio-2c0495dbdc658028a0decf9447459ea6#367495dbdc65808eb791f741fc051231)
+- Portfolio: [Farhan Ali Engineering Portfolio](https://farhan10904.github.io/engineering-portfolio/)
 - LinkedIn: [Farhan Ali](https://www.linkedin.com/in/farhan-ali-95047a245/)
 
 Built as an independent project covering embedded systems, control systems, PCB design, CAD, additive manufacturing, hardware debugging, and prototype validation.
